@@ -1,20 +1,20 @@
-# Use official Node.js image
-FROM node:18
+# Smaller & faster Node image
+FROM node:18-alpine
 
-# Create app directory inside container
+# App directory inside container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy only package files first (for caching)
 COPY server/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy server code
+# Copy rest of the server code
 COPY server/ .
 
-# Expose port your server uses
+# Expose backend port
 EXPOSE 3000
 
-# Command to start server
+# Start server
 CMD ["node", "index.js"]
